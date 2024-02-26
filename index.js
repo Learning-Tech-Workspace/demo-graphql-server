@@ -6,7 +6,8 @@ import db from "./_db.js";
 
 // resolvers for each different type (Query, Mutation,...)
 const resolvers = {
-  Query: { // specify what data should be returned for each query
+  Query: {
+    // specify what data should be returned for each query
     reviews() {
       return db.reviews;
     },
@@ -24,7 +25,30 @@ const resolvers = {
     },
     author(_, args) {
       return db.authors.find((author) => author.id === args.id);
-    }
+    },
+  },
+  Game: {
+    reviews(parent) {
+      // parent is a reference to the value returned by the previous resolver
+      // console.log(parent);
+      return db.reviews.filter((review) => review.game_id === parent.id);
+    },
+  },
+  Author: {
+    reviews(parent) {
+      // console.log(parent);
+      return db.reviews.filter((review) => review.author_id === parent.id);
+    },
+  },
+  Review: {
+    game(parent) {
+      // console.log(parent);
+      return db.games.find((game) => game.id === parent.game_id);
+    },
+    author(parent) {
+      // console.log(parent);
+      return db.authors.find((author) => author.id === parent.author_id);
+    },
   },
 };
 
