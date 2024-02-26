@@ -20,7 +20,10 @@ export const typeDefs = `#graphql
   # define the entry point of every GraphQL query
   type Query { 
     reviews: [Review],
+    review(id: ID!): Review,
     games: [Game],
+    game(id: ID!): Game,
     authors: [Author],
+    author(id: ID!): Author,
   }
 `;
